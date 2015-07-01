@@ -9,7 +9,10 @@ var Model = require('./model');
 // index
 var index = function(req, res, next) {
    if(!req.isAuthenticated()) {
-      res.redirect('/signin');
+      //res.redirect('/signin'); default
+      var post = req.post;
+
+      res.render('index', {title: 'Home'});
    } else {
 
       var user = req.user;
@@ -44,7 +47,7 @@ var signInPost = function(req, res, next) {
          if(err) {
             return res.render('signin', {page_title: 'Sign In', errorMessage: err.message});
          } else {
-            return res.redirect('/');
+            return res.redirect('/dashboard/');
          }
       });
    })(req, res, next);
@@ -103,6 +106,16 @@ var notFound404 = function(req, res, next) {
    res.render('404', {title: '404 Not Found'});
 };
 
+var dashboard = function(req, res, next) {
+   if(req.isAuthenticated()) {
+   		res.render('/dashboard', {page_title: 'Sign In'});
+   } 
+   else {
+   		res.redirect('/signin');
+	}
+   
+};
+
 // export functions
 /**************************************/
 // index
@@ -125,3 +138,5 @@ module.exports.signOut = signOut;
 
 // 404 not found
 module.exports.notFound404 = notFound404;
+
+module.exports.dashboard = dashboard;

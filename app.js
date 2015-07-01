@@ -16,6 +16,8 @@ var route = require('./route');
 var Model = require('./model');
 
 var app = express();
+app.use("/assets",express.static(__dirname + "/assets"));
+app.use("/dashboard",express.static(__dirname + "/views/dashboard"));
 
 passport.use(new LocalStrategy(function(username, password, done) {
    new Model.User({username: username}).fetch().then(function(data) {
@@ -55,6 +57,7 @@ app.use(passport.session());
 
 // GET
 app.get('/', route.index);
+app.get('/dashboard', route.dashboard);
 
 // signin
 // GET

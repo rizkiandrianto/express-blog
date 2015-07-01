@@ -5,6 +5,12 @@ var User = DB.Model.extend({
    idAttribute: 'userId',
 });
 
+var Post = DB.Model.extend({
+   tableName: 'tblPost',
+   idAttribute: 'postId',
+});
+
 module.exports = {
-   User: User
+   User: User,
+   Post: Post
 };
