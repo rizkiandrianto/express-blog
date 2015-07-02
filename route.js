@@ -12,7 +12,7 @@ var index = function(req, res, next) {
       //res.redirect('/signin'); default
       var post = req.post;
 
-      res.render('index', {title: 'Home'});
+      res.render('index', {page_title: 'Home'});
    } else {
 
       var user = req.user;
@@ -20,7 +20,7 @@ var index = function(req, res, next) {
       if(user !== undefined) {
          user = user.toJSON();
       }
-      res.render('index', {title: 'Home', user: user});
+      res.render('dashboard/index', {page_title: 'Dashboard', user: user});
    }
 };
 
@@ -34,7 +34,7 @@ var signIn = function(req, res, next) {
 // sign in
 // POST
 var signInPost = function(req, res, next) {
-   passport.authenticate('local', { successRedirect: '/',
+   passport.authenticate('local', { successRedirect: '/dashboard',
                           failureRedirect: '/signin'}, function(err, user, info) {
       if(err) {
          return res.render('signin', {page_title: 'Sign In', errorMessage: err.message});
@@ -47,7 +47,7 @@ var signInPost = function(req, res, next) {
          if(err) {
             return res.render('signin', {page_title: 'Sign In', errorMessage: err.message});
          } else {
-            return res.redirect('/dashboard/');
+            return res.redirect('/dashboard');
          }
       });
    })(req, res, next);
@@ -72,7 +72,7 @@ var signUpPost = function(req, res, next) {
 
    return usernamePromise.then(function(model) {
       if(model) {
-         res.render('signup', {title: 'signup', errorMessage: 'username already exists'});
+         res.render('signup', {page_title: 'signup', errorMessage: 'username already exists'});
       } else {
          //****************************************************//
          // MORE VALIDATION GOES HERE(E.G. PASSWORD VALIDATION)

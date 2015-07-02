@@ -8,6 +8,7 @@ var ejs = require('ejs');
 var path = require('path');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var admin = require('./admin');
 
 // custom libraries
 // routes
@@ -17,7 +18,8 @@ var Model = require('./model');
 
 var app = express();
 app.use("/assets",express.static(__dirname + "/assets"));
-app.use("/dashboard",express.static(__dirname + "/views/dashboard"));
+//app.use("/dashboard",express.static(__dirname + "/views/dashboard"));
+app.use('/dashboard', admin);
 
 passport.use(new LocalStrategy(function(username, password, done) {
    new Model.User({username: username}).fetch().then(function(data) {
